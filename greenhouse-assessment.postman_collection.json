@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "a730b341-2e47-4ee0-99ff-d22d7dace3bb",
+		"name": "greenhouse-assessment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10559266"
+	},
+	"item": [
+		{
+			"name": "postRequest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contains 'id'\", function () {",
+							"    pm.expect(responseBody).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Set 'id' to a global variable\", function () {",
+							"    pm.globals.set(\"receiptId\", responseBody.id);",
+							"    console.log(\"Stored receiptId: \" + responseBody.id);",
+							"});",
+							"",
+							"const receiptId = responseBody.id;",
+							"const getPointsUrl = `http://localhost:8080/receipts/${receiptId}/points`;",
+							"",
+							"pm.sendRequest({",
+							"    url: getPointsUrl,",
+							"    method: 'GET'",
+							"}, function (err, res) {",
+							"    if (err) {",
+							"        console.error(\"Error fetching points:\", err);",
+							"    } else {",
+							"        ",
+							"        const getResponse = res.json();",
+							"",
+							"    ",
+							"        pm.test(\"GET Points - Status code is 200\", function () {",
+							"            //console.log(\"status of get point::\",res.status )",
+							"            pm.expect(res.status).to.eq(\"OK\");",
+							"        });",
+							"",
+							"        pm.test(\"GET Points - Response contains points\", function () {",
+							"            pm.expect(getResponse).to.have.property(\"points\");",
+							"            //console.log(`Points fetched for receiptId ${receiptId}: ${getResponse.points}`);",
+							"        });",
+							"",
+							"        pm.test(\"test point is eqqual to 109\", pm.expect(getResponse.points).to.eq(109));",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"M&M Corner Market\",\n  \"purchaseDate\": \"2022-03-20\",\n  \"purchaseTime\": \"14:33\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    },{\n      \"shortDescription\": \"Gatorade\",\n      \"price\": \"2.25\"\n    }\n  ],\n  \"total\": \"9.00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "postRequest-1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const responseBody = pm.response.json();",
+							"",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Response contains 'id'\", function () {",
+							"    pm.expect(responseBody).to.have.property(\"id\");",
+							"});",
+							"",
+							"pm.test(\"Set 'id' to a global variable\", function () {",
+							"    pm.globals.set(\"receiptId\", responseBody.id);",
+							"    console.log(\"Stored receiptId: \" + responseBody.id);",
+							"});",
+							"",
+							"const receiptId = responseBody.id;",
+							"const getPointsUrl = `http://localhost:8080/receipts/${receiptId}/points`;",
+							"",
+							"pm.sendRequest({",
+							"    url: getPointsUrl,",
+							"    method: 'GET'",
+							"}, function (err, res) {",
+							"    if (err) {",
+							"        console.error(\"Error fetching points:\", err);",
+							"    } else {",
+							"        ",
+							"        const getResponse = res.json();",
+							"",
+							"    ",
+							"        pm.test(\"GET Points - Status code is 200\", function () {",
+							"            //console.log(\"status of get point::\",res.status )",
+							"            pm.expect(res.status).to.eq(\"OK\");",
+							"        });",
+							"",
+							"        pm.test(\"GET Points - Response contains points\", function () {",
+							"            pm.expect(getResponse).to.have.property(\"points\");",
+							"            //console.log(`Points fetched for receiptId ${receiptId}: ${getResponse.points}`);",
+							"        });",
+							"",
+							"        pm.test(\"test point is eqqual to 28\", pm.expect(getResponse.points).to.eq(28));",
+							"    }",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"packages": {},
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"retailer\": \"Target\",\n  \"purchaseDate\": \"2022-01-01\",\n  \"purchaseTime\": \"13:01\",\n  \"items\": [\n    {\n      \"shortDescription\": \"Mountain Dew 12PK\",\n      \"price\": \"6.49\"\n    },{\n      \"shortDescription\": \"Emils Cheese Pizza\",\n      \"price\": \"12.25\"\n    },{\n      \"shortDescription\": \"Knorr Creamy Chicken\",\n      \"price\": \"1.26\"\n    },{\n      \"shortDescription\": \"Doritos Nacho Cheese\",\n      \"price\": \"3.35\"\n    },{\n      \"shortDescription\": \"   Klarbrunn 12-PK 12 FL OZ  \",\n      \"price\": \"12.00\"\n    }\n  ],\n  \"total\": \"35.35\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/receipts/process",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"receipts",
+						"process"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
